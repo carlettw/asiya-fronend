@@ -117,7 +117,24 @@ export interface ApiError extends Error {
 api.interceptors.response.use(
     (response) => response.data,
     async (error: AxiosError<{ detail?: unknown }>) => {
-        const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean; _timeoutRetry?: boolean };
+        const originalRequest = error.config as InternalAxiosRequestConfig & {
+            _retry?: boolean;
+            _timeoutRetry?: boolean;
+            _retryCount?: number;
+        };
+
+        // Render bepul rejasi uxlab yotganda: 502/503/504 yoki ulanish uzilishi bo'ladi.
+        // GET so'rovlarni bir necha marta, kutib turib qayta yuboramiz.
+        const status = error.response?.status;
+        const isGet = originalRequest?.method?.toLowerCase() === "get";
+        const wakingUp = !error.response || [502, 503, 504].includes(status ?? 0);
+        const retryCount = originalRequest?._retryCount ?? 0;
+        const maxRetries = wakingUp ? 5 : status === 500 ? 1 : 0;
+        if (isGet && retryCount < maxRetries) {
+            originalRequest._retryCount = retryCount + 1;
+            await new Promise((r) => setTimeout(r, 2000 * (retryCount + 1)));
+            return api(originalRequest);
+        }
 
         if (error.code === "ECONNABORTED" && originalRequest && !originalRequest._timeoutRetry) {
             originalRequest._timeoutRetry = true;
