@@ -93,6 +93,19 @@ export default async function ContactPage({ params }: Props) {
                                     {phone}
                                 </a>
                             </div>
+                            {siteConfig.social.whatsapp && (
+                                <div>
+                                    <div className="text-xs text-muted-foreground mb-0.5">WhatsApp</div>
+                                    <a
+                                        href={siteConfig.social.whatsapp}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm text-foreground hover:text-primary"
+                                    >
+                                        {phone}
+                                    </a>
+                                </div>
+                            )}
                             {phoneSecondary && (
                                 <div>
                                     <div className="text-xs text-muted-foreground mb-0.5">{t("office_label")}</div>

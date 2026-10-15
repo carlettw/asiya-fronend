@@ -1,5 +1,6 @@
 import { getT } from "next-i18next/server";
-import { Compass, ShieldCheck, Heart, Users } from "lucide-react";
+import { Compass, ShieldCheck, Heart, Users, Phone, MessageCircle } from "lucide-react";
+import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import { cn, localizedHref } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -87,6 +88,47 @@ export default async function AboutPage({ params }: Props) {
                             </div>
                         );
                     })}
+                </div>
+                <div className="mb-16 grid grid-cols-1 md:grid-cols-[18rem_1fr] gap-8 md:gap-12 items-center rounded-sm bg-muted/50 p-6 md:p-10">
+                    <div className="mx-auto w-full max-w-[18rem] overflow-hidden rounded-sm bg-white ring-1 ring-border">
+                        <img
+                            src={siteConfig.director.photo}
+                            alt={siteConfig.director.name || t("director.title")}
+                            className="aspect-square w-full object-cover object-top"
+                        />
+                    </div>
+                    <div className="text-center md:text-left">
+                        <div className="text-accent text-sm font-bold tracking-wide uppercase mb-2">
+                            {t("director.title")}
+                        </div>
+                        {siteConfig.director.name && (
+                            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-3">
+                                {siteConfig.director.name}
+                            </h2>
+                        )}
+                        <h3 className="text-xl font-bold text-primary mb-2">{t("director.heading")}</h3>
+                        <p className="text-muted-foreground leading-relaxed mb-6">{t("director.text")}</p>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-3">
+                            <a
+                                href={"tel:" + siteConfig.contact.phone.replace(/\s+/g, "")}
+                                className="inline-flex items-center gap-2 rounded-none bg-primary text-primary-foreground px-5 py-3 text-sm font-semibold hover:bg-primary/90 transition-colors"
+                            >
+                                <Phone className="h-4 w-4" />
+                                {siteConfig.contact.phone}
+                            </a>
+                            {siteConfig.social.whatsapp && (
+                                <a
+                                    href={siteConfig.social.whatsapp}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-none border border-primary text-primary px-5 py-3 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-colors"
+                                >
+                                    <MessageCircle className="h-4 w-4" />
+                                    WhatsApp
+                                </a>
+                            )}
+                        </div>
+                    </div>
                 </div>
                 <div className="rounded-sm bg-primary text-white p-8 md:p-10 text-center">
                     <h2 className="text-2xl font-bold mb-2">{t("cta_title")}</h2>

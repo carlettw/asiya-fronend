@@ -24,10 +24,16 @@ export const siteConfig = {
         name: "Asiya Travel Team",
     },
 
+    // Direktor ismini shu yerga yozing (bo'sh bo'lsa, faqat lavozim ko'rinadi)
+    director: {
+        name: "",
+        photo: "/images/director.jpg",
+    },
+
     contact: {
         email: "info@asiyatravel.uz",
-        phone: "+998 90 000 00 00",
-        phoneSecondary: "+998 71 200 00 00",
+        phone: "+998 99 592 37 29",
+        phoneSecondary: "",
         address: {
             uz: "Samarqand, O'zbekiston",
             ru: "Самарканд, Узбекистан",
@@ -41,7 +47,7 @@ export const siteConfig = {
         telegram: "https://t.me/asiyatravel",
         youtube: "",
         tiktok: "",
-        whatsapp: "",
+        whatsapp: "https://wa.me/998995923729",
     },
 };
 
